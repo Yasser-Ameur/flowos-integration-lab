@@ -14,6 +14,7 @@ services:
       - minigoogle-data:/data
 
   postgres:
+    profiles: ["full"]
     image: postgres:17-alpine
     restart: unless-stopped
     environment:
@@ -29,6 +30,7 @@ services:
       retries: 20
 
   redis:
+    profiles: ["full"]
     image: redis:7-alpine
     restart: unless-stopped
     command: ["redis-server", "--appendonly", "yes"]
@@ -41,6 +43,7 @@ services:
       retries: 20
 
   notifly:
+    profiles: ["full"]
     image: ghcr.io/yasser-ameur/notifly:latest
     restart: unless-stopped
     environment: &notifly-environment
@@ -57,6 +60,7 @@ services:
         condition: service_healthy
 
   notifly-worker:
+    profiles: ["full"]
     image: ghcr.io/yasser-ameur/notifly:latest
     restart: unless-stopped
     command: ["notifly-worker"]
@@ -66,6 +70,7 @@ services:
         condition: service_started
 
   pulse:
+    profiles: ["full"]
     image: ghcr.io/yasser-ameur/pulse:latest
     restart: unless-stopped
     ports:

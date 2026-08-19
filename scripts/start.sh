@@ -10,5 +10,4 @@ docker compose up -d --remove-orphans
 echo
 docker compose ps
 echo
-echo "The lab is ready. Open the Ports panel for MiniGoogle and NotiFly URLs."
-echo "Pulse is available to FlowOS inside this Codespace at pulse:9090."
+echo "MiniGoogle is ready. Open port 8080 from the Ports panel."
