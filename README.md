@@ -14,7 +14,8 @@ default branch and starts:
 
 Choose a 4-core machine initially. The lab starts automatically and refreshes
 all service images whenever the Codespace resumes. Use the **Ports** panel to
-copy the forwarded MiniGoogle and NotiFly URLs.
+copy the forwarded MiniGoogle and NotiFly URLs. GitHub will ask you once to
+authorize read-only package access to the three service repositories.
 
 Public ports revert to private after a Codespace restart. Keep them private
 when you run FlowOS in the Codespace. If FlowOS runs on your computer,
