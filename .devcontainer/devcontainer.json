@@ -1,10 +1,11 @@
 {
   "name": "FlowOS Integration Lab",
-  "image": "mcr.microsoft.com/devcontainers/universal:linux",
-  "features": {
-    "ghcr.io/devcontainers/features/docker-in-docker:3": {
-      "version": "latest"
-    }
+  "image": "ghcr.io/yasser-ameur/minigoogle:latest",
+  "overrideCommand": false,
+  "containerEnv": {
+    "NODE_TYPE": "STANDALONE",
+    "NODE_PORT": "8080",
+    "INDEX_DIR": "/workspaces/flowos-integration-lab/.data/minigoogle/index"
   },
   "forwardPorts": [8080],
   "portsAttributes": {
@@ -14,6 +15,5 @@
       "visibility": "public"
     }
   },
-  "postStartCommand": "bash scripts/start.sh",
-  "remoteUser": "codespace"
+  "remoteUser": "root"
 }
