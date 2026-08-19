@@ -3,11 +3,6 @@ set -euo pipefail
 
 cd "$(dirname "$0")/.."
 
-if [[ -n "${GITHUB_TOKEN:-}" && -n "${GITHUB_USER:-}" ]]; then
-  printf '%s' "$GITHUB_TOKEN" |
-    docker login ghcr.io --username "$GITHUB_USER" --password-stdin >/dev/null
-fi
-
 echo "Pulling the latest service images..."
 docker compose pull
 docker compose up -d --remove-orphans

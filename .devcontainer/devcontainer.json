@@ -7,27 +7,6 @@
       "dockerDashComposeVersion": "v2"
     }
   },
-  "customizations": {
-    "codespaces": {
-      "repositories": {
-        "Yasser-Ameur/minigoogle": {
-          "permissions": {
-            "packages": "read"
-          }
-        },
-        "Yasser-Ameur/notifly": {
-          "permissions": {
-            "packages": "read"
-          }
-        },
-        "Yasser-Ameur/pulse": {
-          "permissions": {
-            "packages": "read"
-          }
-        }
-      }
-    }
-  },
   "forwardPorts": [8000, 8080, 9090],
   "portsAttributes": {
     "8000": {
