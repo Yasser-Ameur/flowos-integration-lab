@@ -1,0 +1,27 @@
+{
+  "name": "FlowOS Integration Lab",
+  "image": "mcr.microsoft.com/devcontainers/universal:2",
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {
+      "version": "latest",
+      "dockerDashComposeVersion": "v2"
+    }
+  },
+  "forwardPorts": [8000, 8080, 9090],
+  "portsAttributes": {
+    "8000": {
+      "label": "NotiFly API",
+      "onAutoForward": "openPreview"
+    },
+    "8080": {
+      "label": "MiniGoogle API",
+      "onAutoForward": "notify"
+    },
+    "9090": {
+      "label": "Pulse gRPC (internal)",
+      "onAutoForward": "silent"
+    }
+  },
+  "postStartCommand": "bash scripts/start.sh",
+  "remoteUser": "codespace"
+}

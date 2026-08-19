@@ -1,0 +1,80 @@
+name: flowos-integration-lab
+
+services:
+  minigoogle:
+    image: ghcr.io/yasser-ameur/minigoogle:latest
+    restart: unless-stopped
+    environment:
+      NODE_TYPE: STANDALONE
+      NODE_PORT: 8080
+      INDEX_DIR: /data/index
+    ports:
+      - "8080:8080"
+    volumes:
+      - minigoogle-data:/data
+
+  postgres:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: notifly
+      POSTGRES_USER: notifly
+      POSTGRES_PASSWORD: notifly-local-only
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U notifly -d notifly"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  notifly:
+    image: ghcr.io/yasser-ameur/notifly:latest
+    restart: unless-stopped
+    environment: &notifly-environment
+      NOTIFLY_ENVIRONMENT: development
+      NOTIFLY_DATABASE_URL: postgresql+asyncpg://notifly:notifly-local-only@postgres:5432/notifly
+      NOTIFLY_REDIS_URL: redis://redis:6379/0
+      NOTIFLY_JSON_LOGS: "true"
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  notifly-worker:
+    image: ghcr.io/yasser-ameur/notifly:latest
+    restart: unless-stopped
+    command: ["notifly-worker"]
+    environment: *notifly-environment
+    depends_on:
+      notifly:
+        condition: service_started
+
+  pulse:
+    image: ghcr.io/yasser-ameur/pulse:latest
+    restart: unless-stopped
+    ports:
+      - "9090:9090"
+    volumes:
+      - pulse-data:/data
+
+volumes:
+  minigoogle-data:
+  postgres-data:
+  redis-data:
+  pulse-data:
