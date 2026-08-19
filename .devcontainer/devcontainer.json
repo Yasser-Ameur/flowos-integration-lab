@@ -2,6 +2,10 @@
   "name": "FlowOS Integration Lab",
   "image": "ghcr.io/yasser-ameur/minigoogle:latest",
   "features": {
+    "ghcr.io/devcontainers/features/common-utils:2": {
+      "username": "codespace",
+      "installZsh": false
+    },
     "ghcr.io/devcontainers/features/sshd:1": {
       "version": "latest"
     }
@@ -20,5 +24,5 @@
       "visibility": "public"
     }
   },
-  "remoteUser": "root"
+  "remoteUser": "codespace"
 }
